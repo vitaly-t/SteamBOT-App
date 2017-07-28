@@ -2,10 +2,7 @@ import sql from './sql/index';
 import db from '../../config/database';
 
 const helpers = db.$config.pgp.helpers;
-const cs = new helpers.ColumnSet([{name: 'steam_id', def: 0},
-                                {name: 'steam_group_id_64', prop: 'steam_group_id_64'},
-                                {name: 'steam_id_64', prop: 'steam_id_64'}],
-                                {table: {table:'csgo_users', schema:'public'}});
+const cs = new helpers.ColumnSet([{name: 'steam_id', def: 0}, 'steam_group_id_64', 'steam_id_64', {table: 'csgo_users'});
 
 export default class UserDao {
 
@@ -25,7 +22,7 @@ export default class UserDao {
     }
 
     static saveUsers(users) {
-        return db.task(t => {
+        return db.task('create-users', t => {
             const query = helpers.insert(users, cs);
             return t.none(query);
         });
