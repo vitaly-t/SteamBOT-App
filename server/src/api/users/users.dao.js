@@ -22,7 +22,7 @@ export default class UserDao {
     }
 
     static saveUsers(users) {
-        return db.task('create-users', t => {
+        return db.task('save-users', t => {
             const query = helpers.insert(users, cs);
             return t.none(query);
         });
